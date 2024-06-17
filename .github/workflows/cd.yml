@@ -41,9 +41,12 @@ jobs:
       - name: Deploy to Render
         run: |
           IMAGE_URL=${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
+          SERVICE_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          https://api.render.com/v1/services | jq -r '.[] | select(.serviceName=="intens-api-2022") | .id')
+          echo "Service ID: $SERVICE_ID"
           RESPONSE=$(curl -s -o response.json -w "%{http_code}" -X POST -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
           -H "Content-Type: application/json" \
-          -d '{"serviceName": "intens-api-2022", "image": "'$IMAGE_URL'"}' \
-          https://api.render.com/v1/services/intens-api-2022/deploys)
+          -d '{"image": "'$IMAGE_URL'"}' \
+          https://api.render.com/v1/services/$SERVICE_ID/deploys)
           echo "Response Code: $RESPONSE"
           cat response.json

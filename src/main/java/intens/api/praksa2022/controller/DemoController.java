@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
     @RequestMapping("/")
     public ResponseEntity<String> getRootDemo() {
-        System.out.println("TEST2: CI WORKFLOW");
+        System.out.println("TEST3: CI WORKFLOW");
         return ResponseEntity.ok().body("Intens Praksa 2022!");
     }
 }

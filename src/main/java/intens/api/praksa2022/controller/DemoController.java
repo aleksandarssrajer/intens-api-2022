@@ -9,6 +9,6 @@ public class DemoController {
     @RequestMapping("/")
     public ResponseEntity<String> getRootDemo() {
         System.out.println("TEST3: CI WORKFLOW");
-        return ResponseEntity.ok().body("Intens Praksa 2021!");
+        return ResponseEntity.ok().body("Intens Praksa 2025!");
     }
 }

@@ -1,4 +1,4 @@
-FROM maven:4.0.0-openjdk:8 AS build
+FROM maven:3.8.5-openjdk:8 AS build
 COPY . .
 RUN mvn clean package -DskipTests
 

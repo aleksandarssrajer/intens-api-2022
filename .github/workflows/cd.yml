@@ -36,6 +36,9 @@ jobs:
       - name: Copy JAR to root
         run: cp target/praksa2022-0.0.1-SNAPSHOT.jar .
 
+      - name: List root directory
+        run: ls -la
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         with:

@@ -38,6 +38,14 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
 
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Get Render services
+        run: |
+          curl -X GET -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          https://api.render.com/v1/services
+
       - name: Deploy to Render
         run: |
           IMAGE_URL=${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest

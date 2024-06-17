@@ -25,13 +25,13 @@ jobs:
             ${{ runner.os }}-buildx-
             
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: Dockerfile
@@ -41,7 +41,9 @@ jobs:
       - name: Deploy to Render
         run: |
           IMAGE_URL=${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
-          curl -X POST -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          RESPONSE=$(curl -s -o response.json -w "%{http_code}" -X POST -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
           -H "Content-Type: application/json" \
           -d '{"serviceName": "intens-api-2022", "image": "'$IMAGE_URL'"}' \
-          https://api.render.com/v1/services/intens-api-2022/deploys
+          https://api.render.com/v1/services/intens-api-2022/deploys)
+          echo "Response Code: $RESPONSE"
+          cat response.json

@@ -10,4 +10,5 @@ public class Praksa2022Application {
 		SpringApplication.run(Praksa2022Application.class, args);
 	}
 
+
 }
